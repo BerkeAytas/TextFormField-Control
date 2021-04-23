@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,10 +29,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+  final _texteditingcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(widget.title),
       ),
@@ -39,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             TextFormField(
+              controller: _texteditingcontroller,
               decoration: InputDecoration(labelText: 'Username'),
               validator: (val) {
                 if (val.length < 6) {
@@ -64,15 +70,16 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ElevatedButton(
-                onPressed: () {
-                  _formKey.currentState.reset(); //Login olduktan sonra state sıfırlamak için kullanılıyor.
-                  if (_formKey.currentState.validate()) {
-                    print("oke");
-                  } else {
-                    print("error");
-                  }
-                },
-                child: Text("Giriş Yap"))
+              onPressed: () {
+                _formKey.currentState.reset(); //Login olduktan sonra state sıfırlamak için kullanılıyor.
+                if (_formKey.currentState.validate()) {
+                  print("Giriş Yapıldı");
+                } else {
+                  print("Error");
+                }
+              },
+              child: Text("Giriş Yap"),
+            ),
           ],
         ),
       ),
